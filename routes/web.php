@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Pos\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,19 @@ Route::controller(AdminController::class)->group(function () {
 
     Route::get('/change/password', 'ChangePassword')->name('change.password');
     Route::post('/update/password', 'UpdatePassword')->name('update.password');
+
+});
+
+// Suppliers All Routes
+Route::controller(SupplierController::class)->group(function () {
+    Route::get('/suppliers/all', 'SuppliersAll')->name('suppliers.all');
+    Route::get('/suppliers/add', 'SuppliersAdd')->name('suppliers.add');
+    Route::get('/suppliers/edit/{id}', 'SuppliersEdit')->name('suppliers.edit');
+    Route::get('/suppliers/delete/{id}', 'SuppliersDelete')->name('suppliers.delete');
+
+    Route::post('/suppliers/store', 'SupplierStore')->name('supplier.store');
+    Route::post('/suppliers/update', 'SupplierUpdate')->name('supplier.update');
+
 
 });
 

@@ -1,6 +1,6 @@
 @extends('admin.admin_master')
 @section('admin')
- 
+
 
 <div class="page-content">
 <div class="container-fluid">
@@ -11,7 +11,7 @@
         <div class="card-body">
 
             <h4 class="card-title">Change Password Page </h4><br><br>
-            
+
 
             @if(count($errors))
                 @foreach ($errors->all() as $error)
@@ -50,25 +50,23 @@
                 </div>
             </div>
             <!-- end row -->
- 
 
-
-        
-<input type="submit" class="btn btn-info waves-effect waves-light" value="Change Password">
+            <input type="submit" class="btn btn-info waves-effect waves-light" value="Change Password">
+            
             </form>
-             
-           
-           
+
+
+
         </div>
     </div>
 </div> <!-- end col -->
 </div>
- 
+
 
 
 </div>
 </div>
 
 
- 
-@endsection 
+
+@endsection
