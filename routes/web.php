@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Pos\SupplierController;
+use App\Http\Controllers\Pos\CustomerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,6 +46,18 @@ Route::controller(SupplierController::class)->group(function () {
     Route::post('/suppliers/update', 'SupplierUpdate')->name('supplier.update');
 
 
+});
+
+// Customer All Routes
+Route::controller(CustomerController::class)->group(function () {
+    Route::get('/customer/all', 'CustomerAll')->name('customer.all');
+    Route::get('/customer/add', 'CustomerAdd')->name('customer.add');
+    Route::get('/customer/edit/{id}', 'CustomerEdit')->name('customer.edit');
+    Route::get('/customer/delete/{id}', 'CustomerDelete')->name('customer.delete');
+
+
+    Route::post('/customer/store', 'CustomerStore')->name('customer.store');
+    Route::post('/customer/update', 'CustomerUpdate')->name('customer.update');
 });
 
 
