@@ -8,6 +8,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
         <meta content="Themesdesign" name="author" />
+         <!-- Select 2 -->
+         <link href="{{ asset('ims/assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css">
+        <!-- end Select 2  -->
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{ asset('ims/assets/images/favicon.ico') }}">
 
@@ -26,6 +29,7 @@
         <link href="{{ asset('ims/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="{{ asset('ims/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+
         {{-- Toaster cdn --}}
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
 
@@ -111,6 +115,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"\></script>
 
         <script src="{{ asset('ims/assets/js/code.js') }}"></script>
+         <!--  For Select2 -->
+        <script src="{{ asset('ims/assets/libs/select2/js/select2.min.js') }}"></script>
+        <script src="{{ asset('ims/assets/js/pages/form-advanced.init.js') }}"></script>
+          <!-- end  For Select2 -->
         <script>
             @if(Session::has('message'))
             var type = "{{ Session::get('alert-type','info') }}"

@@ -8,6 +8,7 @@ use App\Http\Controllers\Pos\UnitController;
 use App\Http\Controllers\Pos\CategoryController;
 use App\Http\Controllers\Pos\ProductController;
 use App\Http\Controllers\Pos\PurchaseController;
+use App\Http\Controllers\Pos\InvoiceController;
 use App\Http\Controllers\Pos\DefaultController;
 use Illuminate\Support\Facades\Route;
 
@@ -104,11 +105,22 @@ Route::controller(PurchaseController::class)->group(function () {
 
 
 });
+// invoice All Routes
+Route::controller(InvoiceController::class)->group(function () {
+    Route::get('/invoice/all', 'InvoiceAll')->name('invoice.all');
+    Route::get('/invoice/add', 'InvoiceAdd')->name('invoice.add');
+
+    Route::post('/invoice/store', 'InvoiceStore')->name('invoice.store');
+
+
+
+});
 
 // Default All Routes
 Route::controller(DefaultController::class)->group(function () {
     Route::get('/get-category', 'GetCategory')->name('get-category');
     Route::get('/get-product', 'GetProduct')->name('get-product');
+    Route::get('/check-product', 'GetStock')->name('check-product-stock');
 
 
 
