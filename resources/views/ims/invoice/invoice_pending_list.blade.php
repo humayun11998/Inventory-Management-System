@@ -9,7 +9,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                    <h4 class="mb-sm-0">Invoice All</h4>
+                                    <h4 class="mb-sm-0">Invoice Pending</h4>
 
 
 
@@ -24,7 +24,6 @@
                 <div class="card-body">
                     <a href="{{ route('invoice.add') }}" class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right;"><i class="fas fa-plus-circle"> Add Invoice</i> </a> <br>  <br>
 
-                    <h4 class="card-title">invoice All Data </h4>
 
 
                     <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -63,7 +62,7 @@
                             </td>
                             <td>
                                 @if($item->status == '0')
-                                <a href="" class="btn btn-dark sm" title="Approved Data"><i class="fas fa-check-circle"></i></a>
+                                <a href="{{ route('invoice.approve', $item->id) }}" class="btn btn-dark sm" title="Approved Data"><i class="fas fa-check-circle"></i></a>
                                 <a href="{{ route('invoice.delete', $item->id) }}" class="btn btn-danger sm" title="Delete Data" id="delete"><i class="fas fa-trash-alt"></i></a>
                                 @endif
                             </td>

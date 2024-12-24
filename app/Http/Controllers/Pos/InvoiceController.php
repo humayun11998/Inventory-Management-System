@@ -4,15 +4,16 @@ namespace App\Http\Controllers\Pos;
 
 use App\Models\Unit;
 use App\Models\Invoice;
+use App\Models\payment;
+use App\Models\Product;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use App\Models\InvoiceDetail;
+use App\Models\paymentDetail;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\InvoiceDetail;
-use App\Models\payment;
-use App\Models\paymentDetail;
 use Illuminate\Support\Facades\Auth;
 
 class InvoiceController extends Controller
@@ -165,6 +166,61 @@ class InvoiceController extends Controller
         ];
 
         return redirect()->back()->with($notification);
+
+    }
+
+
+    public function InvoiceApprove($id){
+        $invoice = Invoice::with('invoice_details')->findOrFail($id);
+
+        return view('ims.invoice.invoice_approve', compact('invoice'));
+
+    }
+
+    public function ApprovalStore(Request $request, $id){
+
+        foreach($request->selling_qty as $key => $val){
+            $invoiceDetails = InvoiceDetail::where('id',$key)->first();
+            $product = Product::where('id', $invoiceDetails->product_id)->first();
+
+            if($product->quantity < $request->selling_qty[$key]){
+
+                $notification = [
+                    'message' => "Sorry you approve Maximum Value.",
+                    'alert-type' => 'error'
+                ];
+
+                return redirect()->back()->with($notification);
+
+            }
+        } // End Foreach
+
+        $invoice = Invoice::findOrFail($id);
+        $invoice->updated_by = Auth::user()->id;
+        $invoice->status = '1';
+
+        DB::transaction(function() use($request,$invoice,$id){
+
+            foreach($request->selling_qty as $key => $val){
+                $invoiceDetails = InvoiceDetail::where('id',$key)->first();
+                $product = Product::where('id', $invoiceDetails->product_id)->first();
+                $product->quantity = ((float)$product->quantity) - ((float)$request->selling_qty[$key]);
+                $product->save();
+            }
+
+            $invoice->save();
+
+
+
+        });
+
+        $notification = [
+            'message' => "Invoice Approve Successfully",
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('invoice.pending.list')->with($notification);
+
 
     }
 
