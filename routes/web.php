@@ -114,6 +114,8 @@ Route::controller(InvoiceController::class)->group(function () {
     Route::get('/invoice/print/{id}', 'PrintInvoice')->name('print.invoice');
     Route::get('/invoice/pending/list', 'PendingList')->name('invoice.pending.list');
     Route::get('print/invoice/list', 'PrintInvoiceList')->name('print.invoice.list');
+    Route::get('daily/invoice/report', 'DailyInvoiceReport')->name('daily.invoice.report');
+    Route::get('daily/invoice/pdf', 'DailyInvoicePdf')->name('daily.invoice.pdf');
 
     Route::post('/invoice/store', 'InvoiceStore')->name('invoice.store');
     Route::post('/invoice/store/{id}', 'ApprovalStore')->name('approval.store');

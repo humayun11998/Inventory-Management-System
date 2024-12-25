@@ -233,7 +233,24 @@ class InvoiceController extends Controller
         $invoice = Invoice::with('invoice_details')->findOrFail($id);
         return view('ims.pdf.invoice_pdf', compact('invoice'));
 
+    }
 
+    public function DailyInvoiceReport(){
+        return view('ims.invoice.daily_invoice_report');
+    }
+
+
+    public function DailyInvoicePdf(Request $request){
+
+        $sDate = date('Y-m-d', strtotime($request->start_date));
+        $eDate = date('Y-m-d', strtotime($request->end_date));
+
+        $allData = Invoice::whereBetween('date',[$sDate,$eDate])->where('status','1')->get();
+
+
+        $startDate = date('Y-m-d', strtotime($request->start_date));
+        $endDate = date('Y-m-d', strtotime($request->end_date));
+        return view('ims.pdf.daily_invoice_report_pdf', compact('allData','startDate','endDate'));
 
     }
 
