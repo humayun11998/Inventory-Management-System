@@ -224,5 +224,41 @@ class InvoiceController extends Controller
 
     }
 
+    public function PrintInvoiceList(){
+        $allData = Invoice::orderBy('date','desc')->orderBy('id','desc')->where('status','1')->get();
+        return view('ims.invoice.print_invoice_list', compact('allData'));
+    }
+
+    public function PrintInvoice($id){
+        $invoice = Invoice::with('invoice_details')->findOrFail($id);
+        return view('ims.pdf.invoice_pdf', compact('invoice'));
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
