@@ -9,6 +9,7 @@ use App\Http\Controllers\Pos\CategoryController;
 use App\Http\Controllers\Pos\ProductController;
 use App\Http\Controllers\Pos\PurchaseController;
 use App\Http\Controllers\Pos\InvoiceController;
+use App\Http\Controllers\Pos\StockController;
 use App\Http\Controllers\Pos\DefaultController;
 use Illuminate\Support\Facades\Route;
 
@@ -105,6 +106,8 @@ Route::controller(PurchaseController::class)->group(function () {
 
 
 });
+
+
 // invoice All Routes
 Route::controller(InvoiceController::class)->group(function () {
     Route::get('/invoice/all', 'InvoiceAll')->name('invoice.all');
@@ -120,8 +123,15 @@ Route::controller(InvoiceController::class)->group(function () {
     Route::post('/invoice/store', 'InvoiceStore')->name('invoice.store');
     Route::post('/invoice/store/{id}', 'ApprovalStore')->name('approval.store');
 
+});
 
 
+// Stock All Routes
+Route::controller(StockController::class)->group(function () {
+    Route::get('/stock/report', 'StockReport')->name('stock.report');
+    Route::get('/stock/supplier/report', 'StockSupplierWise')->name('stock.supplier.wise');
+    Route::get('/stock/report/pdf', 'StockReportPdf')->name('stock.report.pdf');
+    Route::get('/supplier/wise/pdf', 'SupplierWisePdf')->name('supplier.wise.pdf');
 });
 
 // Default All Routes
