@@ -132,6 +132,7 @@ Route::controller(StockController::class)->group(function () {
     Route::get('/stock/supplier/report', 'StockSupplierWise')->name('stock.supplier.wise');
     Route::get('/stock/report/pdf', 'StockReportPdf')->name('stock.report.pdf');
     Route::get('/supplier/wise/pdf', 'SupplierWisePdf')->name('supplier.wise.pdf');
+    Route::get('/product/wise/pdf', 'ProductWisePdf')->name('product.wise.pdf');
 });
 
 // Default All Routes
