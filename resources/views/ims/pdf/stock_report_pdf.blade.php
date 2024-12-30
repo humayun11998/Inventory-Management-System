@@ -81,19 +81,36 @@
                                                         <th class="text-center"><strong>Unit</strong></th>
                                                         <th class="text-center"><strong>Category</strong></th>
                                                         <th class="text-center"><strong>Product Name</strong></th>
+                                                        <th class="text-center"><strong>In Qty</strong></th>
+                                                        <th class="text-center"><strong>Out Qty</strong></th>
                                                         <th class="text-center"><strong>Stock</strong></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
 
                                                     @foreach($allData as $key => $item)
+                                                    @php
+
+                                                    $buyingTotal = App\Models\Purchase::where('category_id', $item->category_id)
+                                                    ->where('product_id', $item->id)
+                                                    ->where('status','1')
+                                                    ->sum('buying_qty');
+
+                                                    $sellingTotal = App\Models\InvoiceDetail::where('category_id', $item->category_id)
+                                                    ->where('product_id', $item->id)
+                                                    ->where('status', '1')
+                                                    ->sum('selling_qty');
+
+                                                    @endphp
                                                 <tr>
                                                     <td class="text-center"> {{ $key+1}} </td>
                                                      <td class="text-center"> {{ $item['supplier']['name'] }} </td>
                                                       <td class="text-center"> {{ $item['unit']['name'] }} </td>
                                                        <td class="text-center"> {{ $item['category']['name'] }} </td>
                                                        <td class="text-center"> {{ $item->name }} </td>
-                                                       <td class="text-center"> {{ $item->quantity }} </td>
+                                                       <td class="text-center"> <span class="btn btn-success">{{ $buyingTotal }} </span> </td>
+                                                       <td class="text-center"> <span class="btn btn-info">{{ $sellingTotal }}</span>  </td>
+                                                       <td class="text-center"> <span class="btn btn-danger">{{ $item->quantity }}</span>  </td>
 
                                                 </tr>
                                                 @endforeach
