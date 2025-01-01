@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Pos;
 
 use Carbon\Carbon;
+use App\Models\payment;
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class CustomerController extends Controller
 {
@@ -140,7 +141,7 @@ class CustomerController extends Controller
         unlink($image);
 
         Customer::findOrFail($id)->delete();
-        
+
         $notification = [
             'message' => "Customer Deleted Successfully",
             'alert-type' => 'success'
@@ -148,6 +149,29 @@ class CustomerController extends Controller
 
         return redirect()->route('customer.all')->with($notification);
     }
+
+
+    public function CreditCustomer(){
+
+        $allData = Payment::whereIn('paid_status',['full_due','partial_paid'])->get();
+        return view('ims.customer.customer_credit',compact('allData'));
+    }
+
+    public function CreditCustomerPdf(){
+        $allData = Payment::whereIn('paid_status',['full_due','partial_paid'])->get();
+        return view('ims.pdf.customer_credit_pdf',compact('allData'));
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

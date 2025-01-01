@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::middleware('auth')->group(function () {
+
+
+
 
 // Admin All Routes
 Route::controller(AdminController::class)->group(function () {
@@ -49,6 +53,8 @@ Route::controller(SupplierController::class)->group(function () {
 Route::controller(CustomerController::class)->group(function () {
     Route::get('/customer/all', 'CustomerAll')->name('customer.all');
     Route::get('/customer/add', 'CustomerAdd')->name('customer.add');
+    Route::get('/credit/customer', 'CreditCustomer')->name('credit.customer');
+    Route::get('/credit/customer/print/pdf', 'CreditCustomerPdf')->name('credit.customer.print.pdf');
     Route::get('/customer/edit/{id}', 'CustomerEdit')->name('customer.edit');
     Route::get('/customer/delete/{id}', 'CustomerDelete')->name('customer.delete');
 
@@ -101,6 +107,8 @@ Route::controller(PurchaseController::class)->group(function () {
     Route::get('/purchase/delete/{id}', 'PurchaseDelete')->name('purchase.delete');
     Route::get('/purchase/pending', 'PurchasePending')->name('purchase.pending');
     Route::get('/purchase/approve/{id}', 'PurchaseApprove')->name('purchase.approve');
+    Route::get('/daily/purchase/report', 'DailyPurchaseReport')->name('daily.purchase.report');
+    Route::get('/daily/purchase/pdf', 'DailyPurchasePdf')->name('daily.purchase.pdf');
 
     Route::post('/purchase/store', 'PurchaseStore')->name('purchase.store');
 
@@ -146,7 +154,7 @@ Route::controller(DefaultController::class)->group(function () {
 });
 
 
-
+}); // End Group middleware
 
 Route::get('/dashboard', function () {
     return view('admin.index');
