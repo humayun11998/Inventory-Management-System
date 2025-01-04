@@ -57,10 +57,12 @@ Route::controller(CustomerController::class)->group(function () {
     Route::get('/credit/customer/print/pdf', 'CreditCustomerPdf')->name('credit.customer.print.pdf');
     Route::get('/customer/edit/{id}', 'CustomerEdit')->name('customer.edit');
     Route::get('/customer/delete/{id}', 'CustomerDelete')->name('customer.delete');
+    Route::get('/customer/edit/invoice/{Invoice_id}', 'CustomerEditInvoice')->name('customer.edit.invoice');
 
 
     Route::post('/customer/store', 'CustomerStore')->name('customer.store');
     Route::post('/customer/update', 'CustomerUpdate')->name('customer.update');
+    Route::post('/customer/update/invoice/{Invoice_id}', 'CustomerUpdateInvoice')->name('customer.update.invoice');
 });
 
 // Unit All Routes

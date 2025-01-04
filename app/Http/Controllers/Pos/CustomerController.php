@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\payment;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Models\paymentDetail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\ImageManager;
@@ -160,6 +161,61 @@ class CustomerController extends Controller
     public function CreditCustomerPdf(){
         $allData = Payment::whereIn('paid_status',['full_due','partial_paid'])->get();
         return view('ims.pdf.customer_credit_pdf',compact('allData'));
+    }
+
+    public function CustomerEditInvoice($Invoice_id){
+        $payment = payment::where('Invoice_id',$Invoice_id)->first();
+        return view('ims.customer.edit_customer_invoice',compact('payment'));
+
+    }
+
+    public function CustomerUpdateInvoice(Request $request, $Invoice_id){
+
+        if($request->new_paid_amount < $request->paid_amount){
+
+            $notification = [
+                'message' => "Sorry You Paid Maximum Value.",
+                'alert-type' => 'error'
+            ];
+
+            return redirect()->back()->with($notification);
+
+        }else{
+
+            $payment = payment::where('Invoice_id', $Invoice_id)->first();
+            $paymentDetails = new paymentDetail();
+            $payment->paid_status = $request->paid_status;
+
+            if($request->paid_status == 'full_paid'){
+                $payment->paid_amount = payment::where('Invoice_id',$Invoice_id)
+                ->first()['paid_amount']+$request->new_paid_amount;
+                $payment->due_amount = '0';
+
+                $paymentDetails->current_paid_amount = $request->new_paid_amount;
+            }elseif($request->paid_status == 'partial_paid'){
+                $payment->paid_amount = payment::where('Invoice_id',$Invoice_id)->first()['paid_amount']+$request->paid_amount;
+                $payment->due_amount = payment::where('Invoice_id',$Invoice_id)->first()['due_amount']-$request->paid_amount;
+
+                $paymentDetails->current_paid_amount = $request->paid_amount;
+
+            }
+
+            $payment->save();
+            $paymentDetails->invoice_id = $Invoice_id;
+            $paymentDetails->date = date('Y-m-d', strtotime($request->date));
+            $paymentDetails->updated_by = Auth::user()->id;
+            $paymentDetails->save();
+
+            $notification = [
+                'message' => "Invoice Updated Successfully",
+                'alert-type' => 'success'
+            ];
+
+            return redirect()->route('credit.customer')->with($notification);
+
+
+        }
+
     }
 
 
