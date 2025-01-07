@@ -61,6 +61,9 @@ Route::controller(CustomerController::class)->group(function () {
     Route::get('/customer/invoice/details/{Invoice_id}', 'CustomerInvoiceDetails')->name('customer.invoice.details.pdf');
     Route::get('/paid/customer/print/pdf', 'PaidCustomerPrintPdf')->name('paid.customer.print.pdf');
     Route::get('/paid/customer', 'PaidCustomer')->name('paid.customer');
+    Route::get('/customer/wise/report', 'CustomerWiseReport')->name('customer.wise.report');
+    Route::get('/customer/wise/credit/report', 'CustomerWiseCreditReport')->name('customer.wise.credit.report');
+    Route::get('/customer/wise/paid/report', 'CustomerWisePaidReport')->name('customer.wise.paid.report');
 
 
     Route::post('/customer/store', 'CustomerStore')->name('customer.store');
