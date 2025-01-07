@@ -59,6 +59,8 @@ Route::controller(CustomerController::class)->group(function () {
     Route::get('/customer/delete/{id}', 'CustomerDelete')->name('customer.delete');
     Route::get('/customer/edit/invoice/{Invoice_id}', 'CustomerEditInvoice')->name('customer.edit.invoice');
     Route::get('/customer/invoice/details/{Invoice_id}', 'CustomerInvoiceDetails')->name('customer.invoice.details.pdf');
+    Route::get('/paid/customer/print/pdf', 'PaidCustomerPrintPdf')->name('paid.customer.print.pdf');
+    Route::get('/paid/customer', 'PaidCustomer')->name('paid.customer');
 
 
     Route::post('/customer/store', 'CustomerStore')->name('customer.store');

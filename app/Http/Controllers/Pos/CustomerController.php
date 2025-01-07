@@ -225,6 +225,17 @@ class CustomerController extends Controller
 
     }
 
+    public function PaidCustomer(){
+        $allData = payment::where('paid_status','!=','full_due')->get();
+        return view('ims.customer.paid_customer',compact('allData'));
+    }
+
+
+    public function PaidCustomerPrintPdf(){
+        $allData = payment::where('paid_status','!=','full_due')->get();
+        return view('ims.pdf.customer_paid_pdf',compact('allData'));
+    }
+
 
 
 
